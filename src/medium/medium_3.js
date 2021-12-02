@@ -55,7 +55,7 @@ export function searchName(car_data, searchTerm) {
     var ret = [];
     for(const [i, e] of car_data.entries()) {
         if(e["id"].toLowerCase().includes(searchTerm.toLowerCase())) {
-            res.push(e);
+            ret.push(e);
         }
     }
     return ret;
