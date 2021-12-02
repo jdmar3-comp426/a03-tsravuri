@@ -160,7 +160,7 @@ export const filter = (arr, test) => {
         if(test(element)) {
             ret.pass.push(element)
         } else {
-            ret.faiil.push(element)
+            ret.fail.push(element)
         }
     });
     return ret
