@@ -1,5 +1,5 @@
 import mpg_data from "./data/mpg_data.js";
-import {getStatistics} from "./medium_1.js";
+import { getStatistics } from "./medium_1.js";
 
 /*
 This section can be done by using the array prototype functions.
@@ -20,9 +20,12 @@ see under the methods section
  * @param {allCarStats.ratioHybrids} ratio of cars that are hybrids
  */
 export const allCarStats = {
-    avgMpg: undefined,
-    allYearStats: undefined,
-    ratioHybrids: undefined,
+    avgMpg: {
+        city: getStatistics(mpg_data.map((a) => a.city_mpg)).mean,
+        highway: getStatistics(mpg_data.map((a) => a.highway_mpg)).mean,
+    },
+    allYearStats: getStatistics(mpg_data.map((a) => a.year)),
+    ratioHybrids: mpg_data.filter((a) => a.hybrid).length / mpg_data.length,
 };
 
 
@@ -84,6 +87,32 @@ export const allCarStats = {
  * }
  */
 export const moreStats = {
-    makerHybrids: undefined,
-    avgMpgByYearAndHybrid: undefined
+    makerHybrids: getMakerHybrids(),
+    avgMpgByYearAndHybrid: getAvgMpgByYearAndHybrid()
 };
+
+function getMakerHybrids() {
+    var hybrid = mpg_data.filter(a => a.hybrid);
+    var temp = [];
+    for(var i = 0; i < hybrid.length; i++){
+        if(temp.every(b => b.make !== hybrid[i].make) || temp.length == 0) {
+            var uid = [hybrid[i].id];
+            temp.push({make: hybrid[i].make, hybrids: uid});
+        } else {
+            var uid2 = temp.findIndex(b => b.make === hybrid[i].make);
+            temp[uid2].hybrids.push(hybrid[i].id);
+        }
+    }
+    temp.sort(function(a,b) {
+        if(a.hybrids.length >= b.hybrids.length) {
+            return - 1;
+        } else {
+            return 1;
+        }
+    })
+    return temp;
+}
+
+function getAvgMpgByYearAndHybrid() {
+
+}
