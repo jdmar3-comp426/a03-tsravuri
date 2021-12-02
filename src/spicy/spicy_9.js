@@ -156,7 +156,7 @@ export const filter = (arr, test) => {
         fail: []
     }
 
-    arr.array.forEach(element => {
+    arr.forEach(element => {
         if(test(element)) {
             ret.pass.push(element)
         } else {
