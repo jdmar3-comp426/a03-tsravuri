@@ -114,5 +114,48 @@ function getMakerHybrids() {
 }
 
 function getAvgMpgByYearAndHybrid() {
+    var yrs = new Object();
+    for (var i = 0; i < mpg_data.length; i++) {
+        if (years.hasOwnProperty(mpg_data[i].year)) {
 
+        } else {
+
+            var curYearData = mpg_data.filter(a => a.year === mpg_data[i].year);
+            var hybrCity = 0;
+            var nonHybrCity = 0;
+            var hybrHighway = 0;
+            var nonHybrHighway = 0;
+
+            var hybrids = 0;
+            var nonHybrids = 0;
+
+            for (var j=0; j<curYearData.length; j++) {
+                if (curYearData[j].hybrid) {
+                    hybrids++
+                    hybrCity += curYearData[j].city_mpg
+                    hybrHighway += curYearData[j].highway_mpg
+                } else {
+                    nonHybrids++
+                    nonHybrCity += curYearData[j].city_mpg
+                    nonHybrHighway += curYearData[j].highway_mpg
+                }
+            }
+
+            hybrCity = hybrCity / hybrids;
+            hybrHighway = hybrHighway / hybrids;
+            nonHybrCity = nonHybrCity / nonHybrids;
+            nonHybrHighway = nonHybrHighway / nonHybrids;
+
+            var hybr =  new Object()
+            Object.defineProperties(hybr, {"city": {value: hybrCity, enumerable: true}, "highway": {value: hybrHighway, enumerable: true}})
+            var nonHybr = new Object()
+            Object.defineProperties(nonHybr, {"city": {value: nonHybrCity, enumerable: true}, "highway": {value: nonHybrHighway, enumerable: true}})
+
+            var yr = new Object()
+            Object.defineProperties(yr, {"hybrid": {value: hybr, enumerable: true}, "notHybrid": {value: nonHybr, enumerable: true}})
+
+            Object.defineProperty(yrs, mpg_data[i].year, {value: yr, enumerable: true})
+        }
+    }
+    return yrs;
 }
