@@ -116,7 +116,7 @@ function getMakerHybrids() {
 function getAvgMpgByYearAndHybrid() {
     var yrs = new Object();
     for (var i = 0; i < mpg_data.length; i++) {
-        if (years.hasOwnProperty(mpg_data[i].year)) {
+        if (yrs.hasOwnProperty(mpg_data[i].year)) {
 
         } else {
 
